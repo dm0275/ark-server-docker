@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Build Vanilla image
+    - name: Build image
       run: make build
-    - name: Push Vanilla image
+    - name: Push image
       env:
         DOCKER_USERNAME: ${{ secrets.dockerUsername }}
         DOCKER_TOKEN: ${{ secrets.dockerToken }}

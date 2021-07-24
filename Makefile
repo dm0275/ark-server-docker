@@ -11,12 +11,15 @@ LATEST_TAG=$(QNAME):latest
 .DEFAULT_GOAL := help
 
 
+login: ## Login to Docker Registry
+	docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_TOKEN}"
+
 build:  ## Build Ark server image
 	docker build \
 		-t $(LATEST_TAG) .
 
-push: ## Login and push to Docker Registry
-	docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_TOKEN}" && docker push $(LATEST_TAG)
+push: login
+	docker push $(LATEST_TAG)
 
 help:
 	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
