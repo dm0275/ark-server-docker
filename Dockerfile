@@ -29,7 +29,8 @@ WORKDIR /home/arkuser
 RUN curl -sL -o /tmp/steamcmd_linux.tar.gz "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" \
   && tar xf /tmp/steamcmd_linux.tar.gz -C /home/arkuser/ \
   && mkdir /home/arkuser/ark_server \
-  && /home/arkuser/steamcmd.sh +login anonymous +force_install_dir /home/arkuser/ark_server +app_update 376030 +quit
+  && /home/arkuser/steamcmd.sh +login anonymous +force_install_dir /home/arkuser/ark_server +app_update 376030 +quit \
+  && mkdir -p /home/arkuser/ark_server/ShooterGame/Saved
 
 COPY server_start.sh /home/arkuser
 
