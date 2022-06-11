@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  ark:
+    image: dm0275/ark-server
+    restart: always
+    hostname: ark
+    volumes:
+      - $ARK_HOME:/home/arkuser/ark_server/ShooterGame/Saved
+    ports:
+      - 27015:27015/udp
+      - 7778:7778
+      - 7778:7778/udp
+      - 7777:7777
+      - 7777:7777/udp
+    environment:
+      - JOIN_PASSWORD
+      - ADMIN_PASSWORD
+
+volumes:
+  saves: {}
