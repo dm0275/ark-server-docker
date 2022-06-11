@@ -5,7 +5,7 @@ services:
     restart: always
     hostname: ark
     volumes:
-      - $ARK_HOME:/home/arkuser/ark_server/ShooterGame/Saved
+      - $ARK_HOME:/home/arkuser/ark_server/ShooterGame/Saved/SavedArks
     ports:
       - 27015:27015/udp
       - 7778:7778
