@@ -14,9 +14,20 @@ ext {
   dateTag = "${qname}:${currentDate}"
   latestTag = "${qname}:latest"
   serverName = System.getenv("SERVER_NAME") ?: "ark"
+  serverMap = System.getenv("SERVER_MAP") ?: "TheIsland"
+  joinPassword = System.getenv("JOIN_PASSWORD") ?: "changeme"
+  adminPassword = System.getenv("ADMIN_PASSWORD") ?: "changeme"
   serverDirs = [
     "serverDir": "${dataDir}/${serverName}",
     "modsDir": "${dataDir}/${serverName}_mods"
+  ]
+  envVars = [
+    SERVER_MAP: serverMap,
+    SERVER_NAME: serverName,
+    JOIN_PASSWORD: joinPassword,
+    ADMIN_PASSWORD: joinPassword,
+    ARK_HOME: serverDirs['serverDir'],
+    ARK_MODS: serverDirs['modsDir'],
   ]
 }
 
@@ -55,15 +66,13 @@ task push(type: Exec) {
 task run(type: Exec) {
   group "Ark"
   description "Run Ark server"
-  environment ARK_HOME: serverDirs['serverDir']
-  environment ARK_MODS: serverDirs['modsDir']
+  environment envVars
   commandLine "docker-compose up -d".tokenize()
 }
 
 task stop(type: Exec) {
   group "Ark"
   description "Stop Ark server"
-  environment ARK_HOME: serverDirs['serverDir']
-  environment ARK_MODS: serverDirs['modsDir']
+  environment envVars
   commandLine "docker-compose down -v".tokenize()
 }
