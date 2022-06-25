@@ -14,7 +14,8 @@ RUN apt update && apt install software-properties-common -y \
   && apt install lib32gcc-s1 libsdl2-2.0-0:i386 curl -y \
   && useradd -m arkuser \
   && cd /home/arkuser \
-  && mkdir $STEAMCMD_HOME
+  && mkdir $STEAMCMD_HOME \
+  && chown -R arkuser:arkuser $STEAMCMD_HOME
 
 USER arkuser
 
