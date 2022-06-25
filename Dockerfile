@@ -11,7 +11,7 @@ RUN apt update && apt install software-properties-common -y \
   # && add-apt-repository multiverse \
   && dpkg --add-architecture i386 \
   && apt update \
-  && apt install lib32gcc1 libsdl2-2.0-0:i386 curl -y \
+  && apt install lib32gcc-s1 libsdl2-2.0-0:i386 curl -y \
   && useradd -m arkuser \
   && cd /home/arkuser \
   && mkdir $STEAMCMD_HOME
