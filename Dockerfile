@@ -8,7 +8,7 @@ ENV ARK_BIN_HOME=/home/arkuser/ark_server/ShooterGame/Binaries/Linux
 ENV PATH=$STEAMCMD_HOME:$ARK_BIN_HOME:$PATH
 
 RUN apt update && apt install software-properties-common -y \
-  && add-apt-repository multiverse \
+  # && add-apt-repository multiverse \
   && dpkg --add-architecture i386 \
   && apt update \
   && apt install lib32gcc1 libsdl2-2.0-0:i386 curl -y \
