@@ -9,13 +9,14 @@
 def currentDate = new Date().format('yyyy-MM-dd')
 
 ext {
+  dataDir = "$rootDir/data"
   qname = "dm0275/ark-server"
   dateTag = "${qname}:${currentDate}"
   latestTag = "${qname}:latest"
   serverName = System.getenv("SERVER_NAME") ?: "ark"
   serverDirs = [
-    "${serverName}",
-    "${serverName}_mods"
+    "serverDir": "${dataDir}/${serverName}",
+    "modsDir": "${dataDir}/${serverName}_mods"
   ]
 }
 
@@ -28,8 +29,8 @@ task setup() {
   group "Ark"
   description "Setup the Ark directories"
   doLast {
-    serverDirs.forEach { dir ->
-      mkdir(dir)
+    serverDirs.keySet().forEach { key ->
+      mkdir(serverDirs[key])
     }
   }
 }
@@ -54,11 +55,15 @@ task push(type: Exec) {
 task run(type: Exec) {
   group "Ark"
   description "Run Ark server"
+  environment ARK_HOME: serverDirs['serverDir']
+  environment ARK_MODS: serverDirs['modsDir']
   commandLine "docker-compose up -d".tokenize()
 }
 
 task stop(type: Exec) {
   group "Ark"
   description "Stop Ark server"
+  environment ARK_HOME: serverDirs['serverDir']
+  environment ARK_MODS: serverDirs['modsDir']
   commandLine "docker-compose down -v".tokenize()
 }
