@@ -21,6 +21,9 @@ build:  ## Build Ark server image
 		-t $(DATE_TAG) \
 		-t $(LATEST_TAG) .
 
+setup:
+	mkdir $(ARK) $(ARK)_mods $(ARK)_conf
+
 push: login
 	docker push $(LATEST_TAG)
 	docker push $(DATE_TAG)
@@ -30,3 +33,6 @@ help:
 
 run:
 	docker-compose up -d
+
+stop:
+	docker-compose down -v

@@ -5,10 +5,10 @@ services:
     restart: always
     hostname: ark
     volumes:
-      - $ARK_HOME:/home/arkuser/ark_server/ShooterGame/Saved/SavedArks
-      - $ARK_GAME_INI:/home/arkuser/ark_server/ShooterGame/Saved/Config/LinuxServer/Game.ini
-      - $ARK_USER_INI:/home/arkuser/ark_server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
       - $ARK_MODS:/home/arkuser/ark_server/ShooterGame/Content/Mods
+      - $ARK_HOME:/home/arkuser/ark_server/ShooterGame/Saved/SavedArks
+      # - $ARK_GAME_INI:/home/arkuser/ark_server/ShooterGame/Saved/Config/LinuxServer/Game.ini
+      # - $ARK_USER_INI:/home/arkuser/ark_server/ShooterGame/Saved/Config/LinuxServer/GameUserSettings.ini
     ports:
       - 27015:27015/udp
       - 7778:7778
@@ -20,6 +20,7 @@ services:
       - ADMIN_PASSWORD
       - SERVER_MAP
       - SERVER_NAME
+      - ARK_MOD_IDS
       - EXTRA_CMDS
       - EXTRA_FLAGS
 
