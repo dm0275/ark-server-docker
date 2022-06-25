@@ -4,3 +4,61 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our samples at https://docs.gradle.org/7.4.2/samples
  */
+
+
+def currentDate = new Date().format('yyyy-MM-dd')
+
+ext {
+  qname = "dm0275/ark-server"
+  dateTag = "${qname}:${currentDate}"
+  latestTag = "${qname}:latest"
+  serverName = System.getenv("SERVER_NAME") ?: "ark"
+  serverDirs = [
+    "${serverName}",
+    "${serverName}_mods"
+  ]
+}
+
+task dockerLogin(type: Exec) {
+  commandLine "bash", "-c",  """printenv DOCKER_TOKEN \
+    | docker login -u "\$DOCKER_USERNAME" --password-stdin"""
+}
+
+task setup() {
+  group "Ark"
+  description "Setup the Ark directories"
+  doLast {
+    serverDirs.forEach { dir ->
+      mkdir(dir)
+    }
+  }
+}
+
+task build(type: Exec) {
+  group "Ark"
+  description "Build Ark server image"
+  String buildCmd = """docker build \
+            -t ${dateTag} \
+            -t ${latestTag}"""
+  commandLine "${buildCmd} .".tokenize()
+}
+
+task push(type: Exec) {
+  group "Ark"
+  description "Push Ark server image"
+  commandLine "bash", "-c", """docker push ${qname}:${version} \
+            && docker push ${latestTag}"""
+
+}
+
+task run(type: Exec) {
+  group "Ark"
+  description "Run Ark server"
+  commandLine "docker-compose up -d".tokenize()
+}
+
+task stop(type: Exec) {
+  group "Ark"
+  description "Stop Ark server"
+  commandLine "docker-compose down -v".tokenize()
+}
