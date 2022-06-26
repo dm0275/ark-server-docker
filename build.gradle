@@ -6,7 +6,7 @@
  */
 
 
-def currentDate = new Date().format('yyyy-MM-dd')
+def currentDate = new Date().format('yyyy.MM.dd')
 
 ext {
   dataDir = "$rootDir/data"
@@ -58,7 +58,7 @@ task build(type: Exec) {
 task push(type: Exec) {
   group "Ark"
   description "Push Ark server image"
-  commandLine "bash", "-c", """docker push ${qname}:${version} \
+  commandLine "bash", "-c", """docker push ${dateTag} \
             && docker push ${latestTag}"""
 
 }
