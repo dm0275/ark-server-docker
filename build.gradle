@@ -55,6 +55,15 @@ task build(type: Exec) {
   commandLine "${buildCmd} .".tokenize()
 }
 
+task buildNoCache(type: Exec) {
+  group "Ark"
+  description "Build Ark server image"
+  String buildCmd = """docker build --no-cache \
+            -t ${dateTag} \
+            -t ${latestTag}"""
+  commandLine "${buildCmd} .".tokenize()
+}
+
 task push(type: Exec) {
   group "Ark"
   description "Push Ark server image"
